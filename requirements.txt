@@ -1,0 +1,6 @@
+pytest
+playwright
+requests
+jsonschema
+pytest-xdist
+pytest-html
