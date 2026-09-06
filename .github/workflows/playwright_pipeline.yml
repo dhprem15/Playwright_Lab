@@ -31,7 +31,10 @@ jobs:
           python -m playwright install --with-deps chromium
 
       - name: 5. Execute Full Test Suite in Parallel (Headless)
+        id: run_tests
+        continue-on-error: true
         run: |
+          mkdir -p reports
           pytest -n 2 --html=reports/cloud_execution_report.html --self-contained-html
 
       - name: 6. Upload HTML Test Report Artifact
@@ -41,3 +44,9 @@ jobs:
           name: playwright-test-execution-report
           path: reports/
           retention-days: 14
+
+      - name: 7. Enforce Quality Gate Status
+        if: steps.run_tests.outcome != 'success'
+        run: |
+          echo "Quality Gate Failed: Some automated tests did not pass in cloud runner."
+          exit 1
