@@ -5,3 +5,4 @@ requests
 jsonschema
 pytest-xdist
 pytest-html
+python-dotenv
